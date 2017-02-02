@@ -13,12 +13,16 @@ var stockPrices2 = [14, 1, 5, 8, 11, 1];
 var stockPrices3 = [14, 13, 12, 11, 1];
 
 const stockPricesYesterday = (array) => {
-  let profit = 0;
+  let profit = null;
   for (var i = 0; i < array.length; i++) {
-    for (var j = i; j < array.length; j++) {
+    for (var j = i+1; j < array.length; j++) {
       let sum = array[j] - array[i];
       if (sum > profit) {
         profit = sum;
+      } else {
+        if (profit === null || profit < sum) {
+          profit = sum;
+        }
       }
     }
   }
@@ -31,4 +35,4 @@ const assert = (condition, expected, errorMessage) => {
 
 assert(stockPricesYesterday(stockPrices), 6, 'Should equal 6');
 assert(stockPricesYesterday(stockPrices2), 10, 'Should equal 10')
-assert(stockPricesYesterday(stockPrices3), 0, 'Should equal 10')
+assert(stockPricesYesterday(stockPrices3), -1, 'Should equal -1')
