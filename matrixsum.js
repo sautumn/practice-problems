@@ -8,19 +8,19 @@
 //767x    473    103    699   303
 // -->
 
-var board = [
-  [7,  53, 183, 439, 863],
-  [497, 383, 563,  79, 973],
-  [287, 63, 343, 169, 583],
-  [627, 343, 773, 959, 943],
-  [767, 473, 103, 699, 303]
-];
-//
 // var board = [
-//   [9,10, 1],
-//   [8,3, 1],
-//   [1,1,1]
+//   [7,  53, 183, 439, 863],
+//   [497, 383, 563,  79, 973],
+//   [287, 63, 343, 169, 583],
+//   [627, 343, 773, 959, 943],
+//   [767, 473, 103, 699, 303]
 // ];
+//s
+var board = [
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8, 9]
+];
 
 var answerBoard1 = 3315;
 
@@ -48,47 +48,43 @@ function findMatrixSum(board) {
   var saved =[];
 
   const boardDecisionTree = (board, row, values) =>{
-    if (board[row] === undefined) {
-      // console.log(values, 'row:',row);
-      // console.log(values.length)
-      if (values.length === board.length){
-        values = values.reduce( (a,b) => {
-          return a+b;
-        });
-        saved.push(values);
-        return;
-      }
-      return;
+    console.log(row, board.length);
+    if (row === board.length) {
+      console.log(board)
+      // console.log(vaules);
+      saved.push(values);
+      console.log('saved',saved);
+      return saved;
     }
-    for (var col = 0; col < board[row].length; col++) {
-      let currNum = board[row][col];
-      if (checkCol(board, col)) {
-        //no 'collisions'
-        values.push(currNum);
-        board[row][col] = false;
-        // console.log(board)
-        boardDecisionTree(board, row+1, values);
-        board[row][col] = currNum;
-        // reset values back to original
-        // for next path down decision tree
-        values = [];
-      }
-    }
-  }
 
-  function checkCol(board, col){
+    for (var i = 0; i < board.length; i++) {
+      let currNum = board[row][i];
+      if (!collisions(board, i)) {
+        board[row][i] = false;
+        values.push(currNum);
+        boardDecisionTree(board, row+1, values);
+        board[row][i] = currNum;
+        values.pop();
+      };
+    }
+  };
+
+  function collisions(board, col){
     for (var i = 0; i < board.length; i++) {
       if (!board[i][col]) {
-        return false;
+        return true;
       }
     }
-    return true;
+    return false;
   }
-
+  for (var i = 0; i < board.length; i++) {
+    for (var j = 0; j < board[i].length; j++) {
+      // console.log(board[i][j]);
+    }
+  }
+  //
   boardDecisionTree(board, 0, []);
-  // console.log(saved);
-  console.log(Math.max(...saved));
-  return Math.max(...saved);
+  // return Math.max(...saved);
 
 }
 
