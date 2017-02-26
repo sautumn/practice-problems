@@ -64,7 +64,7 @@ function findMatrixSum(board) {
         values.push(currNum);
         boardDecisionTree(board, row+1, values);
         board[row][i] = currNum;
-        values.pop();
+        values = [];
       };
     }
   };
