@@ -43,3 +43,39 @@ function twoSum(array, target) {
 }
 
 console.log(twoSum([3,2,4], 6));
+
+
+function twoSumPartTWO(array, sum){
+  for (var i = 0; i < array.length; i++) {
+    for (var j = i+1; j < array.length; j++) {
+      if (array[i]+array[j] === sum){
+        return [i,j];
+      }
+    }
+  }
+  return false;
+}
+
+console.log(twoSumPartTWO([3,2,4,1,3],4))
+
+// complement is the current element minus the target
+
+function twoSumPartThree(array, target) {
+  let letters = {};
+
+  for (var i = 0; i < array.length; i++) {
+    if (!letters[array[i]]){
+      letters[array[i]] = i;
+    }
+  }
+
+  for (var i = 0; i < array.length; i++) {
+    let remaining = target - array[i];
+    if (letters[remaining] && letters[remaining] !== target) {
+      return [i, letters[remaining]];
+    }
+  }
+  return false;
+}
+
+console.log(twoSumPartThree([3,2,4,1,3],4))
